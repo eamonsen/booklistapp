@@ -1,8 +1,30 @@
+  Books15 = new Mongo.Collection("books15");
+
 if (Meteor.isClient) {
-  books15 = new Mongo.Collection("2015");
+  Meteor.subscribe("books15");
+
+ aOrigins = db.books15.group(
+   {
+     key: { cCode: 1 },
+     reduce: function( curr, result ) {
+                 result.total += 1;
+             },
+     initial: { total : 0 }
+   }
+)
+
+
   $(document).ready(function(){
-    console.log('ready')
-    var map = new Datamap({element: $('#container')[0]});
+    var map = new Datamap({element: $('#container')[0],
+      fills: {
+        defaultFill: "#d6d0c3"
+      },
+
+      geographyConfig: {
+        highlightOnHover: false
+      }
+
+  });
 
 })
 }
