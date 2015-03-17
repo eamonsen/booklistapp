@@ -25,6 +25,14 @@ if (Meteor.isClient) {
   });
   })
 
+  Meteor.subscribe('titleAuthor', function() {
+    console.log(Books15.find({ }, {fields: {num: 1,title: 1, authorFirst: 1, authorLast: 1, _id: 0}}).fetch())
+    var readBooks = (Books15.find({ }, {fields: {num: 1,title: 1, authorFirst: 1, authorLast: 1, _id: 0}}))
+    readBooks.forEach(function (book) {
+      console.log(book.title + ", " + book.authorFirst + " " + book.authorLast);
+    })
+  })
+
 
   // $(document).ready(function(){
   //   console.log('hi homer!')
@@ -54,6 +62,11 @@ if (Meteor.isServer) {
       console.log('Publishing')
       console.log(Books15.find({ }, {fields: {cCode: 1}}).fetch())
       return Books15.find({ }, {fields: {cCode: 1}})
+    })
+    Meteor.publish('titleAuthor', function(){
+      console.log('Publishing 2')
+      console.log(Books15.find({ }, {fields: {num: 1, title: 1, authorFirst: 1, authorLast: 1}}).fetch())
+      return Books15.find({ }, {fields: {num: 1, title: 1, authorFirst: 1, authorLast: 1}})
     })
   })
 }
