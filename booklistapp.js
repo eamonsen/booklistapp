@@ -37,7 +37,7 @@ if (Meteor.isClient) {
 
   Template.rows.helpers({
         displayRow: function ( ) {
-          var readBooks = (Books15.find({ }, {fields: {num: 1, title: 1, authorFirst: 1, authorLast: 1, copyright: 1}}))
+          var readBooks = (Books15.find({ }, {sort: {num: 1}}, {fields: {num: 1, title: 1, authorFirst: 1, authorLast: 1, copyright: 1}}))
           //console.log(readBooks.fetch())
           return readBooks.fetch()
         }
