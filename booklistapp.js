@@ -2,11 +2,11 @@
 
 if (Meteor.isClient) {
   Meteor.subscribe('cCodes', function() {
-    console.log(Books15.find({ }, {fields: {cCode: 1, _id: 0}}).fetch())
+    //console.log(Books15.find({ }, {fields: {cCode: 1, _id: 0}}).fetch())
     var readCountries = Books15.find({ }, {fields: {cCode: 1, _id: 0}}).fetch()
     var countryFill = _.reduce(readCountries, function(fills, country) { fills[country.cCode] = {fillKey: 'hasReadFrom'}; return fills; }, {})
-    console.log(countryFill);
-    console.log('hi homer!')
+    //console.log(countryFill);
+    //console.log('hi homer!')
 
     var map = new Datamap({element: $('#container')[0],
       fills: {
@@ -26,12 +26,23 @@ if (Meteor.isClient) {
   })
 
   Meteor.subscribe('titleAuthor', function() {
-    console.log(Books15.find({ }, {fields: {num: 1,title: 1, authorFirst: 1, authorLast: 1, _id: 0}}).fetch())
-    var readBooks = (Books15.find({ }, {fields: {num: 1,title: 1, authorFirst: 1, authorLast: 1, _id: 0}}))
+    //console.log(Books15.find({ }, {fields: {num: 1, title: 1, authorFirst: 1, authorLast: 1, _id: 0}}).fetch())
+    var readBooks = (Books15.find({ }, {fields: {num: 1, title: 1, authorFirst: 1, authorLast: 1, copyright: 1}}))
+    
     readBooks.forEach(function (book) {
-      console.log(book.title + ", " + book.authorFirst + " " + book.authorLast);
+      //console.log(book.title + ", " + book.authorFirst + " " + book.authorLast);
+      var readList = (book.title + ", " + book.authorFirst + " " + book.authorLast);
     })
-  })
+    })
+
+  Template.rows.helpers({
+        displayRow: function ( ) {
+          var readBooks = (Books15.find({ }, {fields: {num: 1, title: 1, authorFirst: 1, authorLast: 1, copyright: 1}}))
+          //console.log(readBooks.fetch())
+          return readBooks.fetch()
+        }
+      })
+  
 
 
   // $(document).ready(function(){
@@ -65,8 +76,8 @@ if (Meteor.isServer) {
     })
     Meteor.publish('titleAuthor', function(){
       console.log('Publishing 2')
-      console.log(Books15.find({ }, {fields: {num: 1, title: 1, authorFirst: 1, authorLast: 1}}).fetch())
-      return Books15.find({ }, {fields: {num: 1, title: 1, authorFirst: 1, authorLast: 1}})
+      console.log(Books15.find({ }, {fields: {num: 1, title: 1, authorFirst: 1, authorLast: 1, copyright: 1}}).fetch())
+      return Books15.find({ }, {fields: {num: 1, title: 1, authorFirst: 1, authorLast: 1, copyright: 1}})
     })
   })
 }

@@ -6,7 +6,7 @@
   <div class="page header">
   	<h1>Book List 2015 <small>A Resolution Tracker</small></h1>
   </div>
-!--
+
 <div class="container">
 <table class="table">
     <thead>
@@ -14,8 +14,10 @@
             <th>#</th>
             <th>Title</th>
             <th>Author</th>
+            <th>Copyright</th>
         </tr>
     </thead>
+    {{> rows}}
 </table>
 </div>
 
@@ -23,6 +25,19 @@
 <div id="container" style="position: relative; width: 600px; height: 450px;"></div>
 
 </body>
+
+<template name="rows">
+	<tbody>
+  {{#each displayRow}}
+      <tr>
+      	<td>{{num}}</td>
+      	<td>{{title}}</td>
+      	<td>{{authorFirst}} {{authorLast}}</td>
+      	<td>{{copyright}}</td>
+      </tr>
+  {{/each}}
+</tbody>
+</template>
 
 
 
